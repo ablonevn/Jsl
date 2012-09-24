@@ -39,9 +39,13 @@ class Jsl.Matrix
       rs.push(r)
     # @print(rs)
     @
-    
+  # multiply instance  
   x:->
     @multiply.apply(@,arguments)
+  invert:->
+  # invert instance  
+  inv:->
+    @invert()
 Jsl.matrix=
   create:(data)->
     new Jsl.matrix(data)

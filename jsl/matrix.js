@@ -78,6 +78,12 @@
       return this.multiply.apply(this, arguments);
     };
 
+    Matrix.prototype.invert = function() {};
+
+    Matrix.prototype.inv = function() {
+      return this.invert();
+    };
+
     return Matrix;
 
   })();
