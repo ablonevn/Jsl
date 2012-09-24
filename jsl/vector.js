@@ -36,7 +36,7 @@
           me.setVector(xto - xfrom, yto - yfrom);
           break;
       }
-      return a;
+      return me;
     };
 
     return Vector;
@@ -48,8 +48,7 @@
       var a;
       console.log(arguments);
       a = new Jsl.Vector();
-      a.init.apply(a, arguments);
-      return a;
+      return a.init.apply(a, arguments);
     }
   };
 

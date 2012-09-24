@@ -3,7 +3,7 @@
     __hasProp = Object.prototype.hasOwnProperty,
     __extends = function(child, parent) { for (var key in parent) { if (__hasProp.call(parent, key)) child[key] = parent[key]; } function ctor() { this.constructor = child; } ctor.prototype = parent.prototype; child.prototype = new ctor; child.__super__ = parent.prototype; return child; };
 
-  window.Jig = {};
+  window.Jig || (window.Jig = {});
 
   v = "411.05384,402.41022 432.80084,398.28322 438.57984,400.57222 444.6268,402.96735 439.95184,409.69822 436.1381,415.18913 446.61884,416.66822 453.63848,417.65886 456.26938,416.4296 463.84353,412.89065 459.95984,408.15822 455.82332,403.11771 470.57484,400.74022 478.80222,399.41422 489.34384,399.41422";
 

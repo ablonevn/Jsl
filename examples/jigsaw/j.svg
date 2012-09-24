@@ -37,7 +37,8 @@ preserveAspectRatio="xMidYMid meet"
 	<!--<script type="text/javascript" xlink:href="Jsl/Ext.js"/>-->
 	<script type="text/javascript" xlink:href="jsl/jsl.js"/>
 	<script type="text/javascript" xlink:href="jsl/vector.js"/>
-	<!--<script type="text/javascript" xlink:href="Jsl/sylvester.src.js"/>-->
+	<script type="text/javascript" xlink:href="jsl/matrix.js"/>
+	<script type="text/javascript" xlink:href="jsl/lib/sylvester.src.js"/>
 	<script type="text/javascript" xlink:href="js/Jig.js"/>
 	
 	<path d="M -25 -25 L 25 25" fill="none" stroke-width="0.1px" stroke="red"/>

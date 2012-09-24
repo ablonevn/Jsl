@@ -1,4 +1,4 @@
-window.Jig={}
+window.Jig or={}
 
 
 
