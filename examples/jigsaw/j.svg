@@ -4,19 +4,20 @@
 
 <svg xmlns="http://www.w3.org/2000/svg"
 xmlns:xlink="http://www.w3.org/1999/xlink"
-viewBox="-0 -0 350 350"
+viewBox="-0 -0 20 8"
 
 preserveAspectRatio="xMidYMid meet"
 >
-	<script type="text/javascript" xlink:href="Jsl/Ext.js"/>
-	<script type="text/javascript" xlink:href="Jsl/Ext.js"/>
+
+	<!--
 	<script type="text/javascript" xlink:href="js/ext-core-debug.js"/>
 	<script type="text/javascript" xlink:href="js/sylvester.src.js"/>
 	<script type="text/javascript" xlink:href="js/core.js"/>
+	-->
 	<defs>
 		<marker id="mCircle" markerWidth="10" markerHeight="10"
 		refX="5" refY="5">
-			<circle cx="5" cy="5" r="0.4" style="fill: none; stroke: black;"/>
+			<circle cx="5" cy="5" r="2" style="fill: none; stroke: black;"/>
 		</marker>
 		<path d="m 28.026,59.269 c 5.292,2.096 4.197,5.06 1.372,9.126 -3.294,4.745 2.792,6.423 6.667,6.97 4.069,0.574 8.322,0.114 12.102,-1.534 4.809,-2.097 4.047,-3.555 1.239,-6.976 -3.83,-4.667 0.894,-5.851 4.764,-6.475 5.851,-0.943 11.746,-1.614 17.661,-1.983 2.316,-0.145 4.637,-0.237 6.959,-0.286 -0.458,-2.976 -1.093,-6.013 -1.402,-9.404 -0.968,-10.62 3.574,-16.685 13.411,-12.38 8.269,3.618 11.251,-6.865 8.484,-13.03 C 95.679,15.27 86.351,25.388 80.28,21.72 76.138,18.433 76.499,8.204 77.973,0.5
 		L 0.5,0.5 0.5,61.107 C 7.94099,59.529 22.24699,56.98 28.026,59.269 Z" fill="none" stroke="red"
@@ -33,7 +34,12 @@ preserveAspectRatio="xMidYMid meet"
 		/>
 
 	</defs>
+	<!--<script type="text/javascript" xlink:href="Jsl/Ext.js"/>-->
+	<script type="text/javascript" xlink:href="Jsl/Jsl.js"/>
+	<script type="text/javascript" xlink:href="Jsl/sylvester.src.js"/>
+	<script type="text/javascript" xlink:href="js/Jig.js"/>
+	
 
 	<!--<rect x="0" y="0" width="700" height="700" style="fill:back;fill-opacity:0.5"/>-->
-	<script type="text/javascript" xlink:href="js/j.js"/>
+	<!--<script type="text/javascript" xlink:href="js/j.js"/>-->
 </svg>
