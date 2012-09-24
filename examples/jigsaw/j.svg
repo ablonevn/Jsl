@@ -4,7 +4,7 @@
 
 <svg xmlns="http://www.w3.org/2000/svg"
 xmlns:xlink="http://www.w3.org/1999/xlink"
-viewBox="-0 -0 20 8"
+viewBox="-25 -25 50 50"
 
 preserveAspectRatio="xMidYMid meet"
 >
@@ -35,11 +35,13 @@ preserveAspectRatio="xMidYMid meet"
 
 	</defs>
 	<!--<script type="text/javascript" xlink:href="Jsl/Ext.js"/>-->
-	<script type="text/javascript" xlink:href="Jsl/Jsl.js"/>
+	<script type="text/javascript" xlink:href="jsl/jsl.js"/>
+	<script type="text/javascript" xlink:href="jsl/vector.js"/>
 	<!--<script type="text/javascript" xlink:href="Jsl/sylvester.src.js"/>-->
 	<script type="text/javascript" xlink:href="js/Jig.js"/>
-	<script type="text/javascript" xlink:href="js/Jig.js"/>
 	
+	<path d="M -25 -25 L 25 25" fill="none" stroke-width="0.1px" stroke="red"/>
+	<path d="M 0 0 L 25 0" fill="none" stroke-width="0.1px" stroke="red"/>
 
 	<!--<rect x="0" y="0" width="700" height="700" style="fill:back;fill-opacity:0.5"/>-->
 	<!--<script type="text/javascript" xlink:href="js/j.js"/>-->
