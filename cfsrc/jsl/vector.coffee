@@ -30,7 +30,7 @@ class Jsl.Vector
         yto=arguments[3]
         me.setVector(xto-xfrom,yto-yfrom)
         break
-    a
+    me
     
 
 vector=
@@ -38,7 +38,7 @@ vector=
     console.log(arguments)
     a=new Jsl.Vector()
     a.init.apply(a,arguments)
-    a
+    
 
 
 Jsl.apply Jsl,
