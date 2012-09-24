@@ -43,6 +43,7 @@ class Jsl.Matrix
   x:->
     @multiply.apply(@,arguments)
   invert:->
+    @
   # invert instance  
   inv:->
     @invert()

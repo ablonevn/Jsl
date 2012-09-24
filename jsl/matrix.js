@@ -78,7 +78,9 @@
       return this.multiply.apply(this, arguments);
     };
 
-    Matrix.prototype.invert = function() {};
+    Matrix.prototype.invert = function() {
+      return this;
+    };
 
     Matrix.prototype.inv = function() {
       return this.invert();
