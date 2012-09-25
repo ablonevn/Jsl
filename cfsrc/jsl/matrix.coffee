@@ -100,9 +100,10 @@ class Jsl.Matrix extends Jsl.MatrixData
     
   multiply:(a)->
     targetSize={
-      row:@.size().row
-      col:@.size(a).col
+      row:@m.length
+      col:a.m[0].length
     }
+    ar=a.m
     # console.log(targetSize)
     me=this
     rs=[]
@@ -111,12 +112,14 @@ class Jsl.Matrix extends Jsl.MatrixData
       row=@rows(j)
       r=[]
       for k in [0..targetSize.col-1]
-        col= @cols(k,a)
+        col= @cols(k,ar)
         sum=@multiplySum(row,col)
         r.push(sum)
       rs.push(r)
+    des=new Jsl.Matrix()
+    des.m=rs;
     # @print(rs)
-    @
+    des
   
   # multiply instance  
   x:->
@@ -210,7 +213,6 @@ class Jsl.Matrix extends Jsl.MatrixData
       # if found  
       j=-1
       while ++j<si.row
-        
         continue if i is j
         throw new Exception("Error: row(",i,i,") equal zero.") if row[i] is 0
         orow=des[j]
@@ -248,20 +250,133 @@ Jsl.matrix=
     y-x
   
 
-
-dhaft=->
-  pathData="M 0,0 365,-124 469,-48 531,-4 458,78 404,142 448,187 486,227 547,233 608,239"
-  pl=pathData.replace(/[MQS]\s/g,"").split(" ")
-  po=[]
-  for val in pl
-    r=val.split(",")
-    [r[0],r[1]]=[parseFloat(r[0]),parseFloat(r[1])]
-    po.push(r)
-  Jsl.Matrix.prototype.print.call({m:po})
+class Jsl.CPath
+  textData:"M 0,0 365,-124 469,-48 531,-4 458,78 404,142 448,187 486,227 547,233 608,239"
+  width:0
+  height:0
+  points:[]
   
+  targetWidth:20 #used when draw path to scale object
+  constructor:->
+    console.log "==================================="
+    # parse text data to array
+    pl=@textData.replace(/[MQSL]\s/ig,"").split(" ")
+    # Jsl.Matrix.prototype.print.call({m:pl})
+    po=[]
+    for val in pl
+      r=val.split(",")
+      x=parseFloat(r[0])
+      y=parseFloat(r[1])
+      # console.log x,y
+      #@TODO: width and height are sub tract by max and min coordiantes
+      @width=x if x>@width
+      @height=y if y>@height
+      po.push([x,y])
+      # po.push(r)
+    # debugger;
+    # Jsl.Matrix.prototype.print.call({m:@points})
+    # first,  mirror object throught Y axis to create full path
+    mirrorMatrix=new Jsl.Matrix [
+      [  -1,  0,  0]  #we mirror through Y axists, so transform distance is maxX,0
+      [  0,   1,  0]
+      [  0,   0,  1]
+    ]
+    scale=new Jsl.Matrix [
+      [  20/@width,  0,  20]  #we mirror through Y axists, so transform distance is maxX,0
+      [  0,   20/@width,  0]
+      [  0,   0,  1]
+    ]
+    Affine=scale=new Jsl.Matrix [
+      [  1,  0,  608]  #we mirror through Y axists, so transform distance is maxX,0
+      [  0,   1,  0]
+      [  0,   0,  1]
+    ]
+    # debugger;
+    tmp=Jsl.matrix.unitMatrix(3)
+    
+    n=po.length
+    i=-1
+    tmp.m[0][2]=1
+    tmp.m[1][2]=1
+    # debugger;
+    while ++i<n
+      
+      val=po[i].concat()
+      # console.log val
+      tmp.m[0][0]=val[0]
+      tmp.m[1][1]=val[1]
+      a=mirrorMatrix.x(tmp)
+      val[0]=a.m[0][0]
+      val[1]=a.m[1][1]
+      
+      po.push([val[0],val[1]])
+      # console.log val
+    # Jsl.Matrix.prototype.augment.call({m:@points},po)
+    @points=po
+    Jsl.Matrix.prototype.print.call({m:@points})
+    # Jsl.Matrix.prototype.print.call({m:po})
+  createPathText:->
+    s="M"
+    i=0
+    for p in @points
+      i++
+      if i==2
+        s+=" Q "
+      s+=" "+p[0]+","+p[1]+" "
+    s
+    
+dhaft=->
+  # pathData="M 0,0 365,-124 469,-48 531,-4 458,78 404,142 448,187 486,227 547,233 608,239"
+  # width=608.000
+  # pl=pathData.replace(/[MQS]\s/g,"").split(" ")
+  # po=[]
+  # for val in pl
+    # r=val.split(",")
+    # [r[0],r[1]]=[parseFloat(r[0]),parseFloat(r[1])]
+    # po.push(r)
+  # # Jsl.Matrix.prototype.print.call({m:po})
+  # coordinatesMatrix=new Jsl.Matrix [
+    # [  -1,  0,  0]
+    # [  0,  1,  0]
+    # [  0,  0,  1]
+#     
+  # ]
+  # # mirrorYmatrix=
+  # a=coordinatesMatrix
+  # scale=Jsl.matrix.unitMatrix(3)
+  # b=scale
+  # # scale.m=scale.unitMatrix().m
+  # scale.m[0][0]=20/width
+  # scale.m[1][1]=20/width
+#   
+  # tmp=Jsl.matrix.unitMatrix(3)
+  # s="M"
+  # i=0
+  # for val in po
+    # i++
+    # tmp.m[0][0]=val[0]
+    # tmp.m[1][1]=val[1]
+    # a=coordinatesMatrix.x(scale).x(tmp)
+    # val[0]=a.m[0][0]
+    # val[1]=a.m[1][1]
+    # if i==2
+      # s+=" Q "
+    # s+=" "+val[0]+","+val[1]+" "
+  aa=new Jsl.CPath()  
+  s=aa.createPathText()  
+  dd=document.createElementNS("http://www.w3.org/2000/svg","path");
+  dd.setAttribute("d",s);
+  dd.setAttribute("fill","none");
+  dd.setAttribute("stroke","blue");
+  dd.setAttribute("stroke-width","0.3px");
+  document.documentElement.appendChild dd    
+  # console.log s
+  # curpoint=new Jsl.Matrix()
+  # curpoint.m=curpoint.unitMatrix().m
   # scale point to 10 time with matrix
   # [  1/2  0  ]
   # [  0   1/2 ]
   # console.log(po)
   true
 dhaft()  
+

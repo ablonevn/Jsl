@@ -178,24 +178,27 @@
     };
 
     Matrix.prototype.multiply = function(a) {
-      var col, j, k, me, r, row, rs, sum, targetSize, _ref, _ref2;
+      var ar, col, des, j, k, me, r, row, rs, sum, targetSize, _ref, _ref2;
       targetSize = {
-        row: this.size().row,
-        col: this.size(a).col
+        row: this.m.length,
+        col: a.m[0].length
       };
+      ar = a.m;
       me = this;
       rs = [];
       for (j = 0, _ref = targetSize.row - 1; 0 <= _ref ? j <= _ref : j >= _ref; 0 <= _ref ? j++ : j--) {
         row = this.rows(j);
         r = [];
         for (k = 0, _ref2 = targetSize.col - 1; 0 <= _ref2 ? k <= _ref2 : k >= _ref2; 0 <= _ref2 ? k++ : k--) {
-          col = this.cols(k, a);
+          col = this.cols(k, ar);
           sum = this.multiplySum(row, col);
           r.push(sum);
         }
         rs.push(r);
       }
-      return this;
+      des = new Jsl.Matrix();
+      des.m = rs;
+      return des;
     };
 
     Matrix.prototype.x = function() {
@@ -311,20 +314,83 @@
     }
   };
 
-  dhaft = function() {
-    var pathData, pl, po, r, val, _i, _len, _ref;
-    pathData = "M 0,0 365,-124 469,-48 531,-4 458,78 404,142 448,187 486,227 547,233 608,239";
-    pl = pathData.replace(/[MQS]\s/g, "").split(" ");
-    po = [];
-    for (_i = 0, _len = pl.length; _i < _len; _i++) {
-      val = pl[_i];
-      r = val.split(",");
-      _ref = [parseFloat(r[0]), parseFloat(r[1])], r[0] = _ref[0], r[1] = _ref[1];
-      po.push(r);
+  Jsl.CPath = (function() {
+
+    CPath.prototype.textData = "M 0,0 365,-124 469,-48 531,-4 458,78 404,142 448,187 486,227 547,233 608,239";
+
+    CPath.prototype.width = 0;
+
+    CPath.prototype.height = 0;
+
+    CPath.prototype.points = [];
+
+    CPath.prototype.targetWidth = 20;
+
+    function CPath() {
+      var Affine, a, i, mirrorMatrix, n, pl, po, r, scale, tmp, val, x, y, _i, _len;
+      console.log("===================================");
+      pl = this.textData.replace(/[MQSL]\s/ig, "").split(" ");
+      po = [];
+      for (_i = 0, _len = pl.length; _i < _len; _i++) {
+        val = pl[_i];
+        r = val.split(",");
+        x = parseFloat(r[0]);
+        y = parseFloat(r[1]);
+        if (x > this.width) this.width = x;
+        if (y > this.height) this.height = y;
+        po.push([x, y]);
+      }
+      mirrorMatrix = new Jsl.Matrix([[-1, 0, 0], [0, 1, 0], [0, 0, 1]]);
+      scale = new Jsl.Matrix([[20 / this.width, 0, 20], [0, 20 / this.width, 0], [0, 0, 1]]);
+      Affine = scale = new Jsl.Matrix([[1, 0, 608], [0, 1, 0], [0, 0, 1]]);
+      tmp = Jsl.matrix.unitMatrix(3);
+      n = po.length;
+      i = -1;
+      tmp.m[0][2] = 1;
+      tmp.m[1][2] = 1;
+      while (++i < n) {
+        val = po[i].concat();
+        tmp.m[0][0] = val[0];
+        tmp.m[1][1] = val[1];
+        a = mirrorMatrix.x(tmp);
+        val[0] = a.m[0][0];
+        val[1] = a.m[1][1];
+        po.push([val[0], val[1]]);
+      }
+      this.points = po;
+      Jsl.Matrix.prototype.print.call({
+        m: this.points
+      });
     }
-    Jsl.Matrix.prototype.print.call({
-      m: po
-    });
+
+    CPath.prototype.createPathText = function() {
+      var i, p, s, _i, _len, _ref;
+      s = "M";
+      i = 0;
+      _ref = this.points;
+      for (_i = 0, _len = _ref.length; _i < _len; _i++) {
+        p = _ref[_i];
+        i++;
+        if (i === 2) s += " Q ";
+        s += " " + p[0] + "," + p[1] + " ";
+      }
+      return s;
+    };
+
+    return CPath;
+
+  })();
+
+  dhaft = function() {
+    var aa, dd, s;
+    aa = new Jsl.CPath();
+    s = aa.createPathText();
+    dd = document.createElementNS("http://www.w3.org/2000/svg", "path");
+    dd.setAttribute("d", s);
+    dd.setAttribute("fill", "none");
+    dd.setAttribute("stroke", "blue");
+    dd.setAttribute("stroke-width", "0.3px");
+    document.documentElement.appendChild(dd);
     return true;
   };
 
