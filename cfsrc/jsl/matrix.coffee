@@ -258,6 +258,10 @@ dhaft=->
     [r[0],r[1]]=[parseFloat(r[0]),parseFloat(r[1])]
     po.push(r)
   Jsl.Matrix.prototype.print.call({m:po})
+  
+  # scale point to 10 time with matrix
+  # [  1/2  0  ]
+  # [  0   1/2 ]
   # console.log(po)
   true
 dhaft()  
