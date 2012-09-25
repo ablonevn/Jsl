@@ -552,11 +552,13 @@ Matrix.prototype = {
             do { p = kp - np;
               els.push(M.elements[i][p] + M.elements[j][p]);
             } while (--np);
+            // console.log(els);
             M.elements[i] = els;
             break;
           }
         }
       }
+      console.log("asd",M.inspect());
       if (M.elements[i][i] != 0) {
         for (j = i + 1; j < k; j++) {
           var multiplier = M.elements[j][i] / M.elements[i][i];
@@ -571,6 +573,7 @@ Matrix.prototype = {
           M.elements[j] = els;
         }
       }
+      console.log("sss",M.inspect());
     } while (--n);
     return M;
   },
@@ -659,6 +662,7 @@ Matrix.prototype = {
         // array as it will not be modified by later runs through this loop
         if (p >= ki) { inverse_elements[i].push(new_element); }
       } while (--np);
+      //console.log(els)
       M.elements[i] = els;
       // Then, subtract this row from those above it to
       // give the identity matrix on the left hand side
