@@ -558,7 +558,7 @@ Matrix.prototype = {
           }
         }
       }
-      console.log("asd",M.inspect());
+//      console.log("asd",M.inspect());
       if (M.elements[i][i] != 0) {
         for (j = i + 1; j < k; j++) {
           var multiplier = M.elements[j][i] / M.elements[i][i];
@@ -573,7 +573,7 @@ Matrix.prototype = {
           M.elements[j] = els;
         }
       }
-      console.log("sss",M.inspect());
+//      console.log("sss",M.inspect());
     } while (--n);
     return M;
   },

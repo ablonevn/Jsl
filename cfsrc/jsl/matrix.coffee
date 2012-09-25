@@ -1,3 +1,5 @@
+
+
 class Jsl.MatrixData
   m:[]
 class Jsl.MatrixOne extends Jsl.MatrixData
@@ -81,7 +83,7 @@ class Jsl.Matrix extends Jsl.MatrixData
           k=-1
           row[k]+=@m[j][k] while ++k<sz.col
         else
-          throw new Exception("Cannot handle this") if row[i]==0
+          throw "Cannot handle this "+i if row[i]==0
       while ++l<sz.row
         k=-1
         mul=-@m[l][i]/row[i]
@@ -141,25 +143,26 @@ class Jsl.Matrix extends Jsl.MatrixData
   invert:->
     nrow=@m.length
     des=@.clone().augment(@unitMatrix(nrow)).gaussianElimination()
-    i=-1
-    while ++i<nrow
-      j=-1
+    i=nrow
+    while --i>=0
+      
       tmp=new Jsl.MatrixOne()
       tmp.m=des.m[i]
       tmp.scale(1/des.m[i][i])
-      while ++j<nrow
-        if i is j
-          
-        else 
-          
-          tmp1=Jsl.MatrixOne.prototype.scale.call({m:tmp.m.concat()},-des.m[j][i])
-          Jsl.MatrixOne.prototype.add({m:des.m[j]},tmp1)
-          console.log des.m[j]
-          # Jsl.MatrixOne.prototype.sum()
-          true
+      j=i
+      # debugger;
       
+      while --j>=0
+        
+        tmp1=new Jsl.MatrixOne(tmp.clone().m)
+        tmp1.scale(-des.m[j][i])
+        tmp1.add.call({m:des.m[j]},tmp1)
+        
+        # Jsl.MatrixOne.prototype.sum()
+        true
+      des.m[i]=des.m[i].slice(nrow)
     # des.print()
-    return
+    return des
     si=@size()
     pcol=0
     inv=[]
@@ -237,4 +240,24 @@ Jsl.matrix=
     new Jsl.matrix(data)
   unitMatrix:(n)->
     Jsl.Matrix.prototype.unitMatrix.call(null,n)
+  benchMark:(cb)->
+    x=new Date()
+    for i in [0..100]
+      cb()
+    y=new Date()
+    y-x
   
+
+
+dhaft=->
+  pathData="M 0,0 365,-124 469,-48 531,-4 458,78 404,142 448,187 486,227 547,233 608,239"
+  pl=pathData.replace(/[MQS]\s/g,"").split(" ")
+  po=[]
+  for val in pl
+    r=val.split(",")
+    [r[0],r[1]]=[parseFloat(r[0]),parseFloat(r[1])]
+    po.push(r)
+  Jsl.Matrix.prototype.print.call({m:po})
+  # console.log(po)
+  true
+dhaft()  
